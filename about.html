@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ABOUT — NEGANOV.SYS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+      :root{
+          --g:#00ff41;--g2:#00c832;--glow:rgba(0,255,65,.5);
+          --bg:#020d02;--cb:rgba(0,8,0,.85);--brd:rgba(0,255,65,.15);
+          --txt:#9efdb8;--dim:#2e5e3a;
+      }
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth;}
+      body{
+          background:var(--bg);color:var(--txt);
+          font-family:'Share Tech Mono',monospace;
+          min-height:100vh;overflow-x:hidden;
+      }
+
+      #mc{position:fixed;inset:0;z-index:0;opacity:.22;}
+      #ov{
+          position:fixed;inset:0;z-index:1;pointer-events:none;
+          background:
+                  repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px),
+                  radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.75) 100%);
+      }
+
+      /* NAV */
+      nav{
+          position:fixed;top:0;left:0;right:0;z-index:10;
+          padding:16px 40px;
+          display:flex;align-items:center;justify-content:space-between;
+          border-bottom:1px solid rgba(0,255,65,.08);
+          background:rgba(2,13,2,.7);
+          backdrop-filter:blur(8px);
+      }
+      .nav-back{
+          font-size:.68rem;letter-spacing:.2em;color:var(--dim);
+          text-decoration:none;transition:color .2s;
+          display:flex;align-items:center;gap:8px;
+      }
+      .nav-back:hover{color:var(--g);}
+      .nav-back::before{content:'←';}
+      .nav-title{font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--dim);letter-spacing:.3em;}
+      .nav-right{font-size:.6rem;color:var(--dim);letter-spacing:.18em;}
+
+      /* WRAPPER */
+      .wrap{
+          position:relative;z-index:2;
+          max-width:860px;margin:0 auto;
+          padding:110px 32px 100px;
+      }
+
+      /* PAGE HEADER */
+      .page-header{
+          margin-bottom:64px;
+          opacity:0;animation:fu .6s .1s forwards;
+      }
+      .page-eyebrow{font-size:.63rem;letter-spacing:.35em;color:var(--dim);margin-bottom:14px;}
+      .page-title{
+          font-family:'Orbitron',sans-serif;
+          font-size:clamp(1.8rem,5vw,3rem);font-weight:900;
+          color:var(--g);letter-spacing:.05em;
+          text-shadow:0 0 28px var(--glow),0 0 70px rgba(0,255,65,.1);
+          line-height:1.1;
+      }
+      .page-sub{margin-top:12px;font-size:.82rem;color:var(--dim);line-height:1.7;max-width:560px;}
+
+      /* SECTION */
+      .section{
+          margin-bottom:56px;
+          opacity:0;animation:fu .5s forwards;
+      }
+      .section:nth-child(2){animation-delay:.2s}
+      .section:nth-child(3){animation-delay:.3s}
+      .section:nth-child(4){animation-delay:.4s}
+      .section:nth-child(5){animation-delay:.5s}
+      .section:nth-child(6){animation-delay:.6s}
+      .section:nth-child(7){animation-delay:.7s}
+
+      .sec-label{
+          font-size:.62rem;letter-spacing:.35em;color:var(--dim);
+          margin-bottom:20px;
+          display:flex;align-items:center;gap:12px;
+          font-family:'Orbitron',sans-serif;
+      }
+      .sec-label::after{content:'';flex:1;height:1px;background:var(--brd);}
+
+      /* BIO BLOCK */
+      .bio{
+          background:var(--cb);border:1px solid var(--brd);border-radius:4px;
+          padding:26px 28px;font-size:.82rem;line-height:1.85;color:#6fcf8a;
+          position:relative;overflow:hidden;
+      }
+      .bio::before{
+          content:'';position:absolute;left:0;top:0;width:2px;height:100%;
+          background:linear-gradient(180deg,transparent,var(--g),transparent);
+      }
+
+      /* TIMELINE */
+      .timeline{display:flex;flex-direction:column;gap:20px;}
+      .titem{
+          background:var(--cb);border:1px solid var(--brd);border-radius:4px;
+          padding:22px 24px 22px 28px;
+          position:relative;overflow:hidden;
+          transition:border-color .3s,box-shadow .3s;
+      }
+      .titem::before{
+          content:'';position:absolute;left:0;top:0;
+          width:2px;height:100%;background:var(--dim);
+          transition:background .3s;
+      }
+      .titem:hover::before{background:var(--g);}
+      .titem:hover{
+          border-color:rgba(0,255,65,.3);
+          box-shadow:0 4px 24px rgba(0,255,65,.07);
+      }
+      .titem-date{font-size:.62rem;color:var(--dim);letter-spacing:.15em;margin-bottom:8px;}
+      .titem-title{
+          font-family:'Orbitron',sans-serif;font-size:.82rem;font-weight:700;
+          color:var(--g);margin-bottom:4px;letter-spacing:.02em;
+      }
+      .titem-org{font-size:.72rem;color:var(--g2);margin-bottom:10px;letter-spacing:.08em;}
+      .titem-desc{font-size:.76rem;color:#5a8f6e;line-height:1.7;}
+      .titem-desc li{margin-top:6px;padding-left:14px;position:relative;}
+      .titem-desc li::before{content:'›';position:absolute;left:0;color:var(--dim);}
+
+      /* SKILLS GRID */
+      .skills-grid{
+          display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;
+      }
+      .skill-group{
+          background:var(--cb);border:1px solid var(--brd);border-radius:4px;
+          padding:18px 20px;
+          transition:border-color .3s;
+      }
+      .skill-group:hover{border-color:rgba(0,255,65,.3);}
+      .sg-label{font-size:.6rem;color:var(--dim);letter-spacing:.2em;margin-bottom:10px;}
+      .sg-items{display:flex;flex-wrap:wrap;gap:6px;}
+      .sg-tag{
+          font-size:.68rem;padding:4px 10px;border-radius:2px;
+          border:1px solid rgba(0,255,65,.15);color:#5a8f6e;
+          letter-spacing:.05em;transition:all .2s;cursor:default;
+          position:relative;overflow:hidden;
+      }
+      .sg-tag::after{content:'';position:absolute;inset:0;background:var(--g);opacity:0;transition:opacity .2s;z-index:-1;}
+      .sg-tag:hover{border-color:var(--g);color:var(--bg);}
+      .sg-tag:hover::after{opacity:1;}
+
+      /* LANG ROW */
+      .lang-row{display:flex;gap:16px;flex-wrap:wrap;}
+      .lang-card{
+          background:var(--cb);border:1px solid var(--brd);border-radius:4px;
+          padding:18px 28px;text-align:center;flex:1;min-width:120px;
+          transition:border-color .3s;
+      }
+      .lang-card:hover{border-color:rgba(0,255,65,.3);}
+      .lang-name{font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--g);margin-bottom:4px;}
+      .lang-level{font-size:.65rem;color:var(--dim);letter-spacing:.15em;}
+
+      /* CONTACT ROW */
+      .contact-row{display:flex;flex-wrap:wrap;gap:12px;}
+      .contact-btn{
+          display:flex;align-items:center;gap:10px;
+          border:1px solid var(--brd);border-radius:3px;padding:12px 22px;
+          font-size:.72rem;letter-spacing:.18em;color:var(--dim);
+          text-decoration:none;transition:all .25s;position:relative;overflow:hidden;
+      }
+      .contact-btn::before{
+          content:'';position:absolute;inset:0;
+          background:var(--g);opacity:0;transition:opacity .25s;z-index:-1;
+      }
+      .contact-btn:hover{border-color:var(--g);color:var(--bg);}
+      .contact-btn:hover::before{opacity:1;}
+
+      @keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+      ::-webkit-scrollbar{width:4px;}
+      ::-webkit-scrollbar-track{background:var(--bg);}
+      ::-webkit-scrollbar-thumb{background:var(--dim);}
+      ::-webkit-scrollbar-thumb:hover{background:var(--g2);}
+  </style>
+</head>
+<body>
+
+<canvas id="mc"></canvas>
+<div id="ov"></div>
+<div id="mg"></div>
+
+<nav>
+  <a class="nav-back" href="index.html">&nbsp;HOME</a>
+  <span class="nav-title">ABOUT_ME.EXE</span>
+  <span class="nav-right">NEGANOV.SYS</span>
+</nav>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <p class="page-eyebrow">// IDENTITY MODULE — LOADED</p>
+    <h1 class="page-title">MIKHAIL<br>NEGANOV</h1>
+    <p class="page-sub">.NET Developer · ITMO University, Software Engineering · Saint Petersburg, Russia</p>
+  </div>
+
+  <!-- BIO -->
+  <section class="section">
+    <h2 class="sec-label">[ ABOUT ]</h2>
+    <div class="bio">
+      2nd-year Software Engineering student at ITMO University and a .NET developer with hands-on experience building REST API applications using ASP.NET Core. Alongside my studies I work as a mentor at ITMO — teaching Algorithms & Data Structures and Discrete Mathematics — and simultaneously level up through T-Academy's practical track. I care about clean architecture, separation of concerns, and shipping things that actually work. English at C2, so I operate equally well in Russian or English codebases and teams.
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section">
+    <h2 class="sec-label">[ EXPERIENCE ]</h2>
+    <div class="timeline">
+
+      <div class="titem">
+        <div class="titem-date">SEPT 2025 — PRESENT</div>
+        <div class="titem-title">MENTOR</div>
+        <div class="titem-org">ITMO UNIVERSITY</div>
+        <ul class="titem-desc">
+          <li>Teaching Algorithms & Data Structures and Discrete Mathematics</li>
+          <li>Running problem walkthroughs and consultations, helping students build rigorous solutions</li>
+          <li>Reviewing and grading student lab work</li>
+        </ul>
+      </div>
+
+      <div class="titem">
+        <div class="titem-date">SEPT 2025 — PRESENT</div>
+        <div class="titem-title">TRAINEE DEVELOPER</div>
+        <div class="titem-org">T-ACADEMY</div>
+        <ul class="titem-desc">
+          <li>Practical industry training with real-world backend projects</li>
+          <li>Deep dive into .NET ecosystem, databases, and CI/CD pipelines</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section">
+    <h2 class="sec-label">[ EDUCATION ]</h2>
+    <div class="timeline">
+      <div class="titem">
+        <div class="titem-date">SEPT 2024 — JUNE 2028</div>
+        <div class="titem-title">B.SC. SOFTWARE ENGINEERING</div>
+        <div class="titem-org">ITMO UNIVERSITY — SAINT PETERSBURG</div>
+        <p class="titem-desc">Core curriculum covering algorithms, systems programming, databases, software architecture and discrete mathematics. Currently in 2nd year.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section">
+    <h2 class="sec-label">[ STACK ]</h2>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="sg-label">LANGUAGES</div>
+        <div class="sg-items">
+          <span class="sg-tag">C#</span>
+          <span class="sg-tag">C++</span>
+          <span class="sg-tag">Python</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="sg-label">.NET ECOSYSTEM</div>
+        <div class="sg-items">
+          <span class="sg-tag">ASP.NET Core</span>
+          <span class="sg-tag">EF Core</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="sg-label">DATABASES</div>
+        <div class="sg-items">
+          <span class="sg-tag">PostgreSQL</span>
+          <span class="sg-tag">MySQL</span>
+          <span class="sg-tag">MongoDB</span>
+          <span class="sg-tag">ArangoDB</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="sg-label">TOOLING</div>
+        <div class="sg-items">
+          <span class="sg-tag">Git</span>
+          <span class="sg-tag">Docker</span>
+          <span class="sg-tag">GitHub Actions</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section class="section">
+    <h2 class="sec-label">[ LANGUAGES ]</h2>
+    <div class="lang-row">
+      <div class="lang-card">
+        <div class="lang-name">RUSSIAN</div>
+        <div class="lang-level">NATIVE</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-name">ENGLISH</div>
+        <div class="lang-level">C2 — PROFICIENT</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section">
+    <h2 class="sec-label">[ CONTACT ]</h2>
+    <div class="contact-row">
+      <a class="contact-btn" href="mailto:mitrasher.negativ@gmail.com">
+        ✉ &nbsp;MITRASHER.NEGATIV@GMAIL.COM
+      </a>
+      <a class="contact-btn" href="https://github.com/666mxvbee" target="_blank" rel="noopener">
+        ⌥ &nbsp;GITHUB
+      </a>
+      <a class="contact-btn" href="https://t.me/maybe420" target="_blank" rel="noopener">
+        ✈ &nbsp;TELEGRAM
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+    /* MATRIX RAIN */
+    (()=>{
+        const cv=document.getElementById('mc'),cx=cv.getContext('2d');
+        const ch='アイウエオカキクケコサシスセソ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[]|\\@#$%'.split('');
+        const fs=14;let cols,drops,speeds;
+        function resize(){
+            cv.width=innerWidth;cv.height=innerHeight;
+            cols=Math.floor(cv.width/fs);
+            drops=Array.from({length:cols},()=>Math.random()*-60);
+            speeds=Array.from({length:cols},()=>0.22+Math.random()*.65);
+        }
+        function draw(){
+            cx.fillStyle='rgba(2,13,2,0.052)';cx.fillRect(0,0,cv.width,cv.height);
+            for(let i=0;i<cols;i++){
+                const c=ch[Math.floor(Math.random()*ch.length)];
+                const b=Math.random();
+                if(b>.96){cx.fillStyle='#fff';cx.shadowColor='#00ff41';cx.shadowBlur=10;}
+                else if(b>.76){cx.fillStyle='#00ff41';cx.shadowColor='#00ff41';cx.shadowBlur=4;}
+                else{cx.fillStyle='#003d14';cx.shadowBlur=0;}
+                cx.font=fs+'px Share Tech Mono';
+                cx.fillText(c,i*fs,drops[i]*fs);
+                if(drops[i]*fs>cv.height&&Math.random()>.975)drops[i]=0;
+                drops[i]+=speeds[i];
+            }
+        }
+        resize();window.addEventListener('resize',resize);
+        setInterval(draw,42);
+    })();
+
+    /* MOUSE GLOW */
+    window.addEventListener('mousemove',e=>{
+        const mg=document.getElementById('mg');
+        mg.style.left=e.clientX+'px';mg.style.top=e.clientY+'px';
+    });
+</script>
+</body>
+</html>
