@@ -6,7 +6,7 @@
   <title>PROJECTS — NEGANOV.SYS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
   <style>
       :root{
           --g:#00ff41;--g2:#00c832;--glow:rgba(0,255,65,.5);
@@ -15,7 +15,7 @@
       }
       *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
       html{scroll-behavior:smooth}
-      body{background:var(--bg);color:var(--txt);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden;}
+      body{background:var(--bg);color:var(--txt);font-family:'Share Tech Mono','JetBrains Mono',monospace;min-height:100vh;overflow-x:hidden;}
 
       #mc{position:fixed;inset:0;z-index:0;opacity:.28;}
       #ov{
@@ -28,14 +28,84 @@
       /* NAV */
       nav{
           position:fixed;top:0;left:0;right:0;z-index:10;
-          padding:16px 36px;display:flex;align-items:center;justify-content:space-between;
+          padding:16px 36px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;
           border-bottom:1px solid rgba(0,255,65,.08);
           background:rgba(2,13,2,.75);backdrop-filter:blur(8px);
       }
-      .nav-back{font-size:.66rem;letter-spacing:.2em;color:var(--dim);text-decoration:none;transition:color .2s;}
-      .nav-back:hover{color:var(--g);}
-      .nav-center{font-family:'Orbitron',sans-serif;font-size:.62rem;color:var(--dim);letter-spacing:.3em;}
+      .nav-home{
+          position:relative;
+          min-height:36px;
+          padding:0 16px;
+          border:1px solid rgba(0,255,65,.26);
+          border-radius:3px;
+          background:rgba(0,255,65,.04);
+          font-size:.66rem;letter-spacing:.18em;color:#7fdb9e;
+          text-decoration:none;transition:color .25s,border-color .25s,box-shadow .25s;
+          display:inline-flex;align-items:center;gap:9px;
+          overflow:hidden;white-space:nowrap;
+          -webkit-tap-highlight-color:transparent;
+      }
+      .nav-home::before{
+          content:'←';
+          color:var(--g);
+          font-size:.78rem;
+          line-height:1;
+      }
+      .nav-home::after{
+          content:'';position:absolute;top:0;left:-100%;
+          width:100%;height:100%;
+          background:linear-gradient(90deg,transparent,rgba(0,255,65,.1),transparent);
+          transition:left .35s;
+      }
+      .nav-home:hover{
+          color:var(--g);
+          border-color:rgba(0,255,65,.55);
+          box-shadow:0 0 18px rgba(0,255,65,.11),inset 0 0 16px rgba(0,255,65,.035);
+      }
+      .nav-home:hover::after{left:100%;}
+      .nav-home:focus{outline:none;}
+      .nav-home:focus-visible{
+          outline:1px solid var(--g);
+          outline-offset:3px;
+      }
+      .nav-center{font-family:'Orbitron',sans-serif;font-size:.62rem;color:var(--dim);letter-spacing:.3em;text-align:center;}
+      .nav-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px;}
       .nav-right{font-size:.6rem;color:var(--dim);letter-spacing:.18em;}
+      .lang-switch{
+          position:relative;
+          border:1px solid rgba(0,255,65,.32);
+          border-radius:3px;
+          background:rgba(0,255,65,.045);
+          padding:2px;
+          display:flex;align-items:center;
+          gap:2px;
+          overflow:hidden;
+      }
+      .lang-choice{
+          position:relative;
+          min-width:48px;height:26px;
+          border:0;border-radius:2px;
+          background:transparent;
+          color:var(--dim);
+          font-family:'Share Tech Mono','JetBrains Mono',monospace;
+          font-size:.58rem;letter-spacing:.12em;
+          cursor:pointer;
+          display:flex;align-items:center;justify-content:center;
+          overflow:hidden;
+          transition:color .25s,background .25s,box-shadow .25s;
+          -webkit-tap-highlight-color:transparent;
+      }
+      .lang-choice:hover,
+      .lang-choice.active{
+          color:var(--g);
+          background:rgba(0,255,65,.08);
+          box-shadow:inset 0 0 14px rgba(0,255,65,.04);
+      }
+      .lang-choice:focus{outline:none;}
+      .lang-choice:focus-visible{
+          outline:1px solid var(--g);
+          outline-offset:2px;
+      }
 
       /* BOOT */
       #boot{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:opacity .8s .1s;}
@@ -110,6 +180,18 @@
       ::-webkit-scrollbar-track{background:var(--bg);}
       ::-webkit-scrollbar-thumb{background:var(--dim);border-radius:3px;}
       ::-webkit-scrollbar-thumb:hover{background:var(--g2);}
+
+      @media (max-width:680px){
+          nav{padding:12px 16px;grid-template-columns:auto auto;justify-content:space-between;}
+          .nav-home{min-height:34px;padding:0 13px;font-size:.62rem;letter-spacing:.14em;}
+          .nav-center{display:none;}
+          .nav-right{display:none;}
+          .lang-choice{min-width:44px;height:26px;font-size:.55rem;}
+          .wrap{padding:86px 20px 82px;}
+          .grid{grid-template-columns:1fr;gap:18px;}
+          .card{padding:28px 22px 22px;}
+          .cfoot{gap:14px;align-items:flex-start;flex-direction:column;}
+      }
   </style>
 </head>
 <body>
@@ -118,15 +200,21 @@
 <div id="ov"></div>
 
 <nav>
-  <a class="nav-back" href="index.html">← HOME</a>
-  <span class="nav-center">PROJECTS.SYS</span>
-  <span class="nav-right">NEGANOV.SYS</span>
+  <a class="nav-home" href="index.html" aria-label="Return to home page" data-i18n="home">HOME</a>
+  <span class="nav-center" data-i18n="navTitle">PROJECTS.SYS</span>
+  <div class="nav-actions">
+    <span class="nav-right">NEGANOV.SYS</span>
+    <div class="lang-switch" role="group" aria-label="Language selector">
+      <button class="lang-choice" type="button" data-lang="ru" aria-label="Русская версия">RU</button>
+      <button class="lang-choice" type="button" data-lang="en" aria-label="English version">ENG</button>
+    </div>
+  </div>
 </nav>
 
 <div id="boot">
   <div id="blines"></div>
   <div id="bbw">
-    <div id="bbl">LOADING PROJECTS</div>
+    <div id="bbl" data-i18n="bootLabel">LOADING PROJECTS</div>
     <div id="bb"><div id="bbf"></div></div>
   </div>
 </div>
@@ -135,17 +223,17 @@
   <div class="wrap">
 
     <section>
-      <h2 class="sh">[ PROJECTS ]</h2>
+      <h2 class="sh" data-i18n="projectsLabel">[ PROJECTS ]</h2>
       <div class="grid">
 
         <a class="card" href="https://github.com/666mxvbee/LinkTrackerBot" target="_blank" rel="noopener">
           <div class="cb"></div><div class="cg"></div>
           <div class="cnum">// 01</div>
           <div class="ctitle">LINK TRACKER BOT</div>
-          <div class="cdesc">Microservice-based Telegram bot that monitors GitHub repos and StackOverflow questions for updates. Delivers real-time notifications with zero delay.</div>
+          <div class="cdesc" data-i18n="project1Desc">Microservice-based Telegram bot that monitors GitHub repos and StackOverflow questions for updates. Delivers real-time notifications with zero delay.</div>
           <div class="cfoot">
             <span class="lang"><span class="dot cs"></span>C# / MICROSERVICES</span>
-            <span class="clnk">VIEW_REPO →</span>
+            <span class="clnk" data-i18n="viewRepo">VIEW_REPO →</span>
           </div>
         </a>
 
@@ -153,10 +241,10 @@
           <div class="cb"></div><div class="cg"></div>
           <div class="cnum">// 02</div>
           <div class="ctitle">BATTLESHIP</div>
-          <div class="cdesc">Classic naval warfare across two terminals simultaneously. Low-level networking with a raw terminal UI — pure head-to-head combat.</div>
+          <div class="cdesc" data-i18n="project2Desc">Classic naval warfare across two terminals simultaneously. Low-level networking with a raw terminal UI — pure head-to-head combat.</div>
           <div class="cfoot">
             <span class="lang"><span class="dot cpp"></span>C++ / TERMINAL</span>
-            <span class="clnk">VIEW_REPO →</span>
+            <span class="clnk" data-i18n="viewRepo">VIEW_REPO →</span>
           </div>
         </a>
 
@@ -164,10 +252,10 @@
           <div class="cb"></div><div class="cg"></div>
           <div class="cnum">// 03</div>
           <div class="ctitle">ATM WEBAPI</div>
-          <div class="cdesc">Full ATM backend: user & admin sessions, account operations, deposits, withdrawals, and automatic transaction history via REST endpoints.</div>
+          <div class="cdesc" data-i18n="project3Desc">Full ATM backend: user & admin sessions, account operations, deposits, withdrawals, and automatic transaction history via REST endpoints.</div>
           <div class="cfoot">
             <span class="lang"><span class="dot cs"></span>C# / ASP.NET CORE</span>
-            <span class="clnk">VIEW_REPO →</span>
+            <span class="clnk" data-i18n="viewRepo">VIEW_REPO →</span>
           </div>
         </a>
 
@@ -175,10 +263,10 @@
           <div class="cb"></div><div class="cg"></div>
           <div class="cnum">// 04</div>
           <div class="ctitle">PARKTRACK ADMIN</div>
-          <div class="cdesc">Admin dashboard for ParkTrack: manage users, cameras, parking zones, and data sources from a single unified control panel.</div>
+          <div class="cdesc" data-i18n="project4Desc">Admin dashboard for ParkTrack: manage users, cameras, parking zones, and data sources from a single unified control panel.</div>
           <div class="cfoot">
             <span class="lang"><span class="dot ts"></span>TYPESCRIPT / REACT</span>
-            <span class="clnk">VIEW_REPO →</span>
+            <span class="clnk" data-i18n="viewRepo">VIEW_REPO →</span>
           </div>
         </a>
 
@@ -186,10 +274,10 @@
           <div class="cb"></div><div class="cg"></div>
           <div class="cnum">// 05</div>
           <div class="ctitle">LOGS ANALYZER</div>
-          <div class="cdesc">NGINX log analyzer for both local and remote files. Parse, filter, and extract insights from server logs at machine speed.</div>
+          <div class="cdesc" data-i18n="project5Desc">NGINX log analyzer for both local and remote files. Parse, filter, and extract insights from server logs at machine speed.</div>
           <div class="cfoot">
             <span class="lang"><span class="dot cs"></span>C# / CLI</span>
-            <span class="clnk">VIEW_REPO →</span>
+            <span class="clnk" data-i18n="viewRepo">VIEW_REPO →</span>
           </div>
         </a>
 
@@ -197,10 +285,10 @@
           <div class="cb"></div><div class="cg"></div>
           <div class="cnum">// 06</div>
           <div class="ctitle">SPOTIFY ANALYZER</div>
-          <div class="cdesc">Surface patterns in your Spotify listening history — genre drift, mood shifts, and taste evolution over time. Written in Julia.</div>
+          <div class="cdesc" data-i18n="project6Desc">Surface patterns in your Spotify listening history — genre drift, mood shifts, and taste evolution over time. Written in Julia.</div>
           <div class="cfoot">
             <span class="lang"><span class="dot jl"></span>JULIA / DATA</span>
-            <span class="clnk">VIEW_REPO →</span>
+            <span class="clnk" data-i18n="viewRepo">VIEW_REPO →</span>
           </div>
         </a>
 
@@ -208,28 +296,108 @@
     </section>
 
     <section>
-      <h2 class="sh">[ STACK ]</h2>
+      <h2 class="sh" data-i18n="stackLabel">[ STACK ]</h2>
       <div class="skills">
         <span class="tag">C#</span><span class="tag">C++</span>
         <span class="tag">TypeScript</span><span class="tag">Julia</span>
         <span class="tag">.NET / ASP.NET</span><span class="tag">REST API</span>
         <span class="tag">Microservices</span><span class="tag">Telegram API</span>
         <span class="tag">NGINX</span><span class="tag">React</span>
-        <span class="tag">Data Analysis</span><span class="tag">Git</span>
-        <span class="tag">Docker</span>
+        <span class="tag" data-i18n="dataAnalysis">Data Analysis</span><span class="tag">Git</span>
+        <span class="tag">Docker</span><span class="tag">Kafka</span>
+        <span class="tag">RabbitMQ</span>
       </div>
     </section>
 
     <footer>
       <p>© 2026 &nbsp;·&nbsp; MIKHAIL NEGANOV &nbsp;·&nbsp;
         <a href="https://github.com/666mxvbee" target="_blank">GITHUB</a>
-        &nbsp;·&nbsp; ALL SYSTEMS NOMINAL</p>
+        &nbsp;·&nbsp; <span data-i18n="footerStatus">ALL SYSTEMS NOMINAL</span></p>
     </footer>
 
   </div>
 </div>
 
 <script>
+    const I18N={
+        en:{
+            pageTitle:'PROJECTS - NEGANOV.SYS',
+            home:'HOME',
+            navTitle:'PROJECTS.SYS',
+            bootLabel:'LOADING PROJECTS',
+            projectsLabel:'[ PROJECTS ]',
+            project1Desc:'Microservice-based Telegram bot that monitors GitHub repos and StackOverflow questions for updates. Delivers real-time notifications with zero delay.',
+            project2Desc:'Classic naval warfare across two terminals simultaneously. Low-level networking with a raw terminal UI - pure head-to-head combat.',
+            project3Desc:'Full ATM backend: user & admin sessions, account operations, deposits, withdrawals, and automatic transaction history via REST endpoints.',
+            project4Desc:'Admin dashboard for ParkTrack: manage users, cameras, parking zones, and data sources from a single unified control panel.',
+            project5Desc:'NGINX log analyzer for both local and remote files. Parse, filter, and extract insights from server logs at machine speed.',
+            project6Desc:'Surface patterns in your Spotify listening history - genre drift, mood shifts, and taste evolution over time. Written in Julia.',
+            viewRepo:'VIEW_REPO →',
+            stackLabel:'[ STACK ]',
+            dataAnalysis:'Data Analysis',
+            footerStatus:'ALL SYSTEMS NOMINAL',
+            bootLines:[
+                {s:'[  OK  ]',t:'Loading project modules...',ok:'ok'},
+                {s:'[  OK  ]',t:'6 repositories indexed',ok:'ok'},
+                {s:'[  OK  ]',t:'Rendering project grid',ok:'ok'},
+            ],
+        },
+        ru:{
+            pageTitle:'ПРОЕКТЫ - NEGANOV.SYS',
+            home:'ГЛАВНАЯ',
+            navTitle:'PROJECTS.SYS',
+            bootLabel:'ЗАГРУЗКА ПРОЕКТОВ',
+            projectsLabel:'[ ПРОЕКТЫ ]',
+            project1Desc:'Микросервисный Telegram-бот, который отслеживает обновления в GitHub-репозиториях и вопросах StackOverflow. Отправляет уведомления в реальном времени без задержек.',
+            project2Desc:'Классическая морская битва в двух терминалах одновременно. Низкоуровневая сеть и сырой terminal UI для честного head-to-head матча.',
+            project3Desc:'Полный backend для ATM: пользовательские и админские сессии, операции со счетами, пополнения, снятия и автоматическая история транзакций через REST endpoints.',
+            project4Desc:'Админ-панель для ParkTrack: управление пользователями, камерами, парковочными зонами и источниками данных из единого интерфейса.',
+            project5Desc:'Анализатор NGINX-логов для локальных и удаленных файлов. Парсинг, фильтрация и извлечение инсайтов из серверных логов на высокой скорости.',
+            project6Desc:'Находит паттерны в истории прослушиваний Spotify: дрейф жанров, изменения настроения и эволюцию музыкального вкуса со временем. Написан на Julia.',
+            viewRepo:'РЕПОЗИТОРИЙ →',
+            stackLabel:'[ СТЕК ]',
+            dataAnalysis:'Анализ данных',
+            footerStatus:'ВСЕ СИСТЕМЫ В НОРМЕ',
+            bootLines:[
+                {s:'[  OK  ]',t:'Загрузка модулей проектов...',ok:'ok'},
+                {s:'[  OK  ]',t:'6 репозиториев индексировано',ok:'ok'},
+                {s:'[  OK  ]',t:'Рендер сетки проектов',ok:'ok'},
+            ],
+        },
+    };
+    const LANG_KEY='neganov.lang';
+    function getSavedLang(){
+        try{return localStorage.getItem(LANG_KEY)==='ru'?'ru':'en';}
+        catch{return 'en';}
+    }
+    function saveLang(lang){
+        try{localStorage.setItem(LANG_KEY,lang);}
+        catch{}
+    }
+    let activeLang=getSavedLang();
+    function applyLang(lang){
+        const pack=I18N[lang]||I18N.en;
+        document.documentElement.lang=lang;
+        document.title=pack.pageTitle;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+            const key=el.dataset.i18n;
+            if(pack[key])el.textContent=pack[key];
+        });
+        document.querySelectorAll('.lang-choice').forEach(btn=>{
+            const isActive=btn.dataset.lang===lang;
+            btn.classList.toggle('active',isActive);
+            btn.setAttribute('aria-pressed',String(isActive));
+        });
+    }
+    applyLang(activeLang);
+    document.querySelectorAll('.lang-choice').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            activeLang=btn.dataset.lang==='ru'?'ru':'en';
+            saveLang(activeLang);
+            applyLang(activeLang);
+        });
+    });
+
     /* MATRIX RAIN */
     (()=>{
         const cv=document.getElementById('mc'),cx=cv.getContext('2d');
@@ -261,11 +429,7 @@
 
     /* BOOT */
     (async()=>{
-        const lines=[
-            {s:'[  OK  ]',t:'Loading project modules…',ok:'ok'},
-            {s:'[  OK  ]',t:'6 repositories indexed',ok:'ok'},
-            {s:'[  OK  ]',t:'Rendering project grid',ok:'ok'},
-        ];
+        const lines=I18N[activeLang].bootLines;
         const wrap=document.getElementById('blines'),fill=document.getElementById('bbf');
         const delay=ms=>new Promise(r=>setTimeout(r,ms));
         for(let i=0;i<lines.length;i++){

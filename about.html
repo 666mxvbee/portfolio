@@ -6,7 +6,7 @@
   <title>ABOUT — NEGANOV.SYS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
   <style>
       :root{
           --g:#00ff41;--g2:#00c832;--glow:rgba(0,255,65,.5);
@@ -17,7 +17,7 @@
       html{scroll-behavior:smooth;}
       body{
           background:var(--bg);color:var(--txt);
-          font-family:'Share Tech Mono',monospace;
+          font-family:'Share Tech Mono','JetBrains Mono',monospace;
           min-height:100vh;overflow-x:hidden;
       }
 
@@ -33,20 +33,85 @@
       nav{
           position:fixed;top:0;left:0;right:0;z-index:10;
           padding:16px 40px;
-          display:flex;align-items:center;justify-content:space-between;
+          display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;
           border-bottom:1px solid rgba(0,255,65,.08);
           background:rgba(2,13,2,.7);
           backdrop-filter:blur(8px);
       }
-      .nav-back{
-          font-size:.68rem;letter-spacing:.2em;color:var(--dim);
-          text-decoration:none;transition:color .2s;
-          display:flex;align-items:center;gap:8px;
+      .nav-home{
+          position:relative;
+          min-height:36px;
+          padding:0 16px;
+          border:1px solid rgba(0,255,65,.26);
+          border-radius:3px;
+          background:rgba(0,255,65,.04);
+          font-size:.68rem;letter-spacing:.18em;color:#7fdb9e;
+          text-decoration:none;transition:color .25s,border-color .25s,box-shadow .25s;
+          display:inline-flex;align-items:center;gap:9px;
+          overflow:hidden;white-space:nowrap;
+          -webkit-tap-highlight-color:transparent;
       }
-      .nav-back:hover{color:var(--g);}
-      .nav-back::before{content:'←';}
-      .nav-title{font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--dim);letter-spacing:.3em;}
+      .nav-home::before{
+          content:'←';
+          color:var(--g);
+          font-size:.78rem;
+          line-height:1;
+      }
+      .nav-home::after{
+          content:'';position:absolute;top:0;left:-100%;
+          width:100%;height:100%;
+          background:linear-gradient(90deg,transparent,rgba(0,255,65,.1),transparent);
+          transition:left .35s;
+      }
+      .nav-home:hover{
+          color:var(--g);
+          border-color:rgba(0,255,65,.55);
+          box-shadow:0 0 18px rgba(0,255,65,.11),inset 0 0 16px rgba(0,255,65,.035);
+      }
+      .nav-home:hover::after{left:100%;}
+      .nav-home:focus{outline:none;}
+      .nav-home:focus-visible{
+          outline:1px solid var(--g);
+          outline-offset:3px;
+      }
+      .nav-title{font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--dim);letter-spacing:.3em;text-align:center;}
+      .nav-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px;}
       .nav-right{font-size:.6rem;color:var(--dim);letter-spacing:.18em;}
+      .lang-switch{
+          position:relative;
+          border:1px solid rgba(0,255,65,.32);
+          border-radius:3px;
+          background:rgba(0,255,65,.045);
+          padding:2px;
+          display:flex;align-items:center;
+          gap:2px;
+          overflow:hidden;
+      }
+      .lang-choice{
+          position:relative;
+          min-width:48px;height:26px;
+          border:0;border-radius:2px;
+          background:transparent;
+          color:var(--dim);
+          font-family:'Share Tech Mono','JetBrains Mono',monospace;
+          font-size:.58rem;letter-spacing:.12em;
+          cursor:pointer;
+          display:flex;align-items:center;justify-content:center;
+          overflow:hidden;
+          transition:color .25s,background .25s,box-shadow .25s;
+          -webkit-tap-highlight-color:transparent;
+      }
+      .lang-choice:hover,
+      .lang-choice.active{
+          color:var(--g);
+          background:rgba(0,255,65,.08);
+          box-shadow:inset 0 0 14px rgba(0,255,65,.04);
+      }
+      .lang-choice:focus{outline:none;}
+      .lang-choice:focus-visible{
+          outline:1px solid var(--g);
+          outline-offset:2px;
+      }
 
       /* WRAPPER */
       .wrap{
@@ -183,6 +248,18 @@
       ::-webkit-scrollbar-track{background:var(--bg);}
       ::-webkit-scrollbar-thumb{background:var(--dim);}
       ::-webkit-scrollbar-thumb:hover{background:var(--g2);}
+
+      @media (max-width:680px){
+          nav{padding:12px 16px;grid-template-columns:auto auto;justify-content:space-between;}
+          .nav-home{min-height:34px;padding:0 13px;font-size:.62rem;letter-spacing:.14em;}
+          .nav-title{display:none;}
+          .nav-right{display:none;}
+          .lang-choice{min-width:44px;height:26px;font-size:.55rem;}
+          .wrap{padding:96px 20px 80px;}
+          .page-sub{font-size:.78rem;}
+          .bio{padding:22px 20px;}
+          .contact-btn{width:100%;justify-content:center;text-align:center;}
+      }
   </style>
 </head>
 <body>
@@ -192,51 +269,57 @@
 <div id="mg"></div>
 
 <nav>
-  <a class="nav-back" href="index.html">&nbsp;HOME</a>
-  <span class="nav-title">ABOUT_ME.EXE</span>
-  <span class="nav-right">NEGANOV.SYS</span>
+  <a class="nav-home" href="index.html" aria-label="Return to home page" data-i18n="home">HOME</a>
+  <span class="nav-title" data-i18n="navTitle">ABOUT_ME.EXE</span>
+  <div class="nav-actions">
+    <span class="nav-right">NEGANOV.SYS</span>
+    <div class="lang-switch" role="group" aria-label="Language selector">
+      <button class="lang-choice" type="button" data-lang="ru" aria-label="Русская версия">RU</button>
+      <button class="lang-choice" type="button" data-lang="en" aria-label="English version">ENG</button>
+    </div>
+  </div>
 </nav>
 
 <div class="wrap">
 
   <!-- HEADER -->
   <div class="page-header">
-    <p class="page-eyebrow">// IDENTITY MODULE — LOADED</p>
+    <p class="page-eyebrow" data-i18n="pageEyebrow">// IDENTITY MODULE — LOADED</p>
     <h1 class="page-title">MIKHAIL<br>NEGANOV</h1>
-    <p class="page-sub">.NET Developer · ITMO University, Software Engineering · Saint Petersburg, Russia</p>
+    <p class="page-sub" data-i18n="pageSub">.NET Developer · ITMO University, Software Engineering · Saint Petersburg, Russia</p>
   </div>
 
   <!-- BIO -->
   <section class="section">
-    <h2 class="sec-label">[ ABOUT ]</h2>
-    <div class="bio">
+    <h2 class="sec-label" data-i18n="aboutLabel">[ ABOUT ]</h2>
+    <div class="bio" data-i18n="bio">
       2nd-year Software Engineering student at ITMO University and a .NET developer with hands-on experience building REST API applications using ASP.NET Core. Alongside my studies I work as a mentor at ITMO — teaching Algorithms & Data Structures and Discrete Mathematics — and simultaneously level up through T-Academy's practical track. I care about clean architecture, separation of concerns, and shipping things that actually work. English at C2, so I operate equally well in Russian or English codebases and teams.
     </div>
   </section>
 
   <!-- EXPERIENCE -->
   <section class="section">
-    <h2 class="sec-label">[ EXPERIENCE ]</h2>
+    <h2 class="sec-label" data-i18n="experienceLabel">[ EXPERIENCE ]</h2>
     <div class="timeline">
 
       <div class="titem">
-        <div class="titem-date">SEPT 2025 — PRESENT</div>
-        <div class="titem-title">MENTOR</div>
-        <div class="titem-org">ITMO UNIVERSITY</div>
+        <div class="titem-date" data-i18n="mentorDate">SEPT 2025 — PRESENT</div>
+        <div class="titem-title" data-i18n="mentorTitle">MENTOR</div>
+        <div class="titem-org" data-i18n="mentorOrg">ITMO UNIVERSITY</div>
         <ul class="titem-desc">
-          <li>Teaching Algorithms & Data Structures and Discrete Mathematics</li>
-          <li>Running problem walkthroughs and consultations, helping students build rigorous solutions</li>
-          <li>Reviewing and grading student lab work</li>
+          <li data-i18n="mentorDesc1">Teaching Algorithms & Data Structures and Discrete Mathematics</li>
+          <li data-i18n="mentorDesc2">Running problem walkthroughs and consultations, helping students build rigorous solutions</li>
+          <li data-i18n="mentorDesc3">Reviewing and grading student lab work</li>
         </ul>
       </div>
 
       <div class="titem">
-        <div class="titem-date">SEPT 2025 — PRESENT</div>
-        <div class="titem-title">TRAINEE DEVELOPER</div>
+        <div class="titem-date" data-i18n="traineeDate">SEPT 2025 — PRESENT</div>
+        <div class="titem-title" data-i18n="traineeTitle">TRAINEE DEVELOPER</div>
         <div class="titem-org">T-ACADEMY</div>
         <ul class="titem-desc">
-          <li>Practical industry training with real-world backend projects</li>
-          <li>Deep dive into .NET ecosystem, databases, and CI/CD pipelines</li>
+          <li data-i18n="traineeDesc1">Practical industry training with real-world backend projects</li>
+          <li data-i18n="traineeDesc2">Deep dive into .NET ecosystem, databases, and CI/CD pipelines</li>
         </ul>
       </div>
 
@@ -245,33 +328,34 @@
 
   <!-- EDUCATION -->
   <section class="section">
-    <h2 class="sec-label">[ EDUCATION ]</h2>
+    <h2 class="sec-label" data-i18n="educationLabel">[ EDUCATION ]</h2>
     <div class="timeline">
       <div class="titem">
-        <div class="titem-date">SEPT 2024 — JUNE 2028</div>
-        <div class="titem-title">B.SC. SOFTWARE ENGINEERING</div>
-        <div class="titem-org">ITMO UNIVERSITY — SAINT PETERSBURG</div>
-        <p class="titem-desc">Core curriculum covering algorithms, systems programming, databases, software architecture and discrete mathematics. Currently in 2nd year.</p>
+        <div class="titem-date" data-i18n="educationDate">SEPT 2024 — JUNE 2028</div>
+        <div class="titem-title" data-i18n="educationTitle">B.SC. SOFTWARE ENGINEERING</div>
+        <div class="titem-org" data-i18n="educationOrg">ITMO UNIVERSITY — SAINT PETERSBURG</div>
+        <p class="titem-desc" data-i18n="educationDesc">Core curriculum covering algorithms, systems programming, databases, software architecture and discrete mathematics. Currently in 2nd year.</p>
       </div>
     </div>
   </section>
 
   <!-- SKILLS -->
   <section class="section">
-    <h2 class="sec-label">[ STACK ]</h2>
+    <h2 class="sec-label" data-i18n="stackLabel">[ STACK ]</h2>
     <div class="skills-grid">
 
       <div class="skill-group">
-        <div class="sg-label">LANGUAGES</div>
+        <div class="sg-label" data-i18n="languagesGroup">LANGUAGES</div>
         <div class="sg-items">
           <span class="sg-tag">C#</span>
           <span class="sg-tag">C++</span>
           <span class="sg-tag">Python</span>
+          <span class="sg-tag">Java</span>
         </div>
       </div>
 
       <div class="skill-group">
-        <div class="sg-label">.NET ECOSYSTEM</div>
+        <div class="sg-label" data-i18n="dotnetGroup">.NET ECOSYSTEM</div>
         <div class="sg-items">
           <span class="sg-tag">ASP.NET Core</span>
           <span class="sg-tag">EF Core</span>
@@ -279,7 +363,7 @@
       </div>
 
       <div class="skill-group">
-        <div class="sg-label">DATABASES</div>
+        <div class="sg-label" data-i18n="databasesGroup">DATABASES</div>
         <div class="sg-items">
           <span class="sg-tag">PostgreSQL</span>
           <span class="sg-tag">MySQL</span>
@@ -289,11 +373,13 @@
       </div>
 
       <div class="skill-group">
-        <div class="sg-label">TOOLING</div>
+        <div class="sg-label" data-i18n="toolingGroup">TOOLING</div>
         <div class="sg-items">
           <span class="sg-tag">Git</span>
           <span class="sg-tag">Docker</span>
           <span class="sg-tag">GitHub Actions</span>
+          <span class="sg-tag">Kafka</span>
+          <span class="sg-tag">RabbitMQ</span>
         </div>
       </div>
 
@@ -302,22 +388,22 @@
 
   <!-- LANGUAGES -->
   <section class="section">
-    <h2 class="sec-label">[ LANGUAGES ]</h2>
+    <h2 class="sec-label" data-i18n="spokenLanguagesLabel">[ LANGUAGES ]</h2>
     <div class="lang-row">
       <div class="lang-card">
-        <div class="lang-name">RUSSIAN</div>
-        <div class="lang-level">NATIVE</div>
+        <div class="lang-name" data-i18n="russianName">RUSSIAN</div>
+        <div class="lang-level" data-i18n="russianLevel">NATIVE</div>
       </div>
       <div class="lang-card">
-        <div class="lang-name">ENGLISH</div>
-        <div class="lang-level">C2 — PROFICIENT</div>
+        <div class="lang-name" data-i18n="englishName">ENGLISH</div>
+        <div class="lang-level" data-i18n="englishLevel">C2 — PROFICIENT</div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section class="section">
-    <h2 class="sec-label">[ CONTACT ]</h2>
+    <h2 class="sec-label" data-i18n="contactLabel">[ CONTACT ]</h2>
     <div class="contact-row">
       <a class="contact-btn" href="mailto:mitrasher.negativ@gmail.com">
         ✉ &nbsp;MITRASHER.NEGATIV@GMAIL.COM
@@ -334,6 +420,113 @@
 </div>
 
 <script>
+    const I18N={
+        en:{
+            pageTitle:'ABOUT - NEGANOV.SYS',
+            home:'HOME',
+            navTitle:'ABOUT_ME.EXE',
+            pageEyebrow:'// IDENTITY MODULE - LOADED',
+            pageSub:'.NET Developer · ITMO University, Software Engineering · Saint Petersburg, Russia',
+            aboutLabel:'[ ABOUT ]',
+            bio:'2nd-year Software Engineering student at ITMO University and a .NET developer with hands-on experience building REST API applications using ASP.NET Core. Alongside my studies I work as a mentor at ITMO - teaching Algorithms & Data Structures and Discrete Mathematics - and simultaneously level up through T-Academy\\u0027s practical track. I care about clean architecture, separation of concerns, and shipping things that actually work. English at C2, so I operate equally well in Russian or English codebases and teams.',
+            experienceLabel:'[ EXPERIENCE ]',
+            mentorDate:'SEPT 2025 - PRESENT',
+            mentorTitle:'MENTOR',
+            mentorOrg:'ITMO UNIVERSITY',
+            mentorDesc1:'Teaching Algorithms & Data Structures and Discrete Mathematics',
+            mentorDesc2:'Running problem walkthroughs and consultations, helping students build rigorous solutions',
+            mentorDesc3:'Reviewing and grading student lab work',
+            traineeDate:'SEPT 2025 - PRESENT',
+            traineeTitle:'TRAINEE DEVELOPER',
+            traineeDesc1:'Practical industry training with real-world backend projects',
+            traineeDesc2:'Deep dive into .NET ecosystem, databases, and CI/CD pipelines',
+            educationLabel:'[ EDUCATION ]',
+            educationDate:'SEPT 2024 - JUNE 2028',
+            educationTitle:'B.SC. SOFTWARE ENGINEERING',
+            educationOrg:'ITMO UNIVERSITY - SAINT PETERSBURG',
+            educationDesc:'Core curriculum covering algorithms, systems programming, databases, software architecture and discrete mathematics. Currently in 2nd year.',
+            stackLabel:'[ STACK ]',
+            languagesGroup:'LANGUAGES',
+            dotnetGroup:'.NET ECOSYSTEM',
+            databasesGroup:'DATABASES',
+            toolingGroup:'TOOLING',
+            spokenLanguagesLabel:'[ LANGUAGES ]',
+            russianName:'RUSSIAN',
+            russianLevel:'NATIVE',
+            englishName:'ENGLISH',
+            englishLevel:'C2 - PROFICIENT',
+            contactLabel:'[ CONTACT ]',
+        },
+        ru:{
+            pageTitle:'ОБО МНЕ - NEGANOV.SYS',
+            home:'ГЛАВНАЯ',
+            navTitle:'ОБО_МНЕ.EXE',
+            pageEyebrow:'// МОДУЛЬ ЛИЧНОСТИ - ЗАГРУЖЕН',
+            pageSub:'.NET разработчик · Университет ИТМО, программная инженерия · Санкт-Петербург, Россия',
+            aboutLabel:'[ ОБО МНЕ ]',
+            bio:'Студент 2-го курса программной инженерии в Университете ИТМО и .NET разработчик с практическим опытом создания REST API на ASP.NET Core. Параллельно с учебой работаю ментором в ИТМО: веду алгоритмы и структуры данных, дискретную математику, помогаю студентам разбирать задачи и доводить решения до строгого вида. Развиваюсь на практическом треке T-Academy, ценю чистую архитектуру, разделение ответственности и продукты, которые действительно работают. Английский на уровне C2, поэтому свободно работаю как в русскоязычных, так и в англоязычных командах.',
+            experienceLabel:'[ ОПЫТ ]',
+            mentorDate:'СЕНТ 2025 - СЕЙЧАС',
+            mentorTitle:'МЕНТОР',
+            mentorOrg:'УНИВЕРСИТЕТ ИТМО',
+            mentorDesc1:'Преподаю алгоритмы и структуры данных, а также дискретную математику',
+            mentorDesc2:'Провожу разборы задач и консультации, помогаю студентам строить строгие решения',
+            mentorDesc3:'Проверяю и оцениваю лабораторные работы студентов',
+            traineeDate:'СЕНТ 2025 - СЕЙЧАС',
+            traineeTitle:'УЧЕНИК-РАЗРАБОТЧИК',
+            traineeDesc1:'Практическое индустриальное обучение на backend-проектах, близких к реальным задачам',
+            traineeDesc2:'Глубокая работа с экосистемой .NET, базами данных и CI/CD-пайплайнами',
+            educationLabel:'[ ОБРАЗОВАНИЕ ]',
+            educationDate:'СЕНТ 2024 - ИЮНЬ 2028',
+            educationTitle:'БАКАЛАВРИАТ · ПРОГРАММНАЯ ИНЖЕНЕРИЯ',
+            educationOrg:'УНИВЕРСИТЕТ ИТМО - САНКТ-ПЕТЕРБУРГ',
+            educationDesc:'Основная программа включает алгоритмы, системное программирование, базы данных, архитектуру ПО и дискретную математику. Сейчас учусь на 2-м курсе.',
+            stackLabel:'[ СТЕК ]',
+            languagesGroup:'ЯЗЫКИ ПРОГРАММИРОВАНИЯ',
+            dotnetGroup:'ЭКОСИСТЕМА .NET',
+            databasesGroup:'БАЗЫ ДАННЫХ',
+            toolingGroup:'ИНСТРУМЕНТЫ',
+            spokenLanguagesLabel:'[ ЯЗЫКИ ]',
+            russianName:'РУССКИЙ',
+            russianLevel:'РОДНОЙ',
+            englishName:'АНГЛИЙСКИЙ',
+            englishLevel:'C2 - СВОБОДНО',
+            contactLabel:'[ КОНТАКТЫ ]',
+        },
+    };
+    const LANG_KEY='neganov.lang';
+    function getSavedLang(){
+        try{return localStorage.getItem(LANG_KEY)==='ru'?'ru':'en';}
+        catch{return 'en';}
+    }
+    function saveLang(lang){
+        try{localStorage.setItem(LANG_KEY,lang);}
+        catch{}
+    }
+    let activeLang=getSavedLang();
+    function applyLang(lang){
+        const pack=I18N[lang]||I18N.en;
+        document.documentElement.lang=lang;
+        document.title=pack.pageTitle;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+            const key=el.dataset.i18n;
+            if(pack[key])el.textContent=pack[key];
+        });
+        document.querySelectorAll('.lang-choice').forEach(btn=>{
+            const isActive=btn.dataset.lang===lang;
+            btn.classList.toggle('active',isActive);
+            btn.setAttribute('aria-pressed',String(isActive));
+        });
+    }
+    applyLang(activeLang);
+    document.querySelectorAll('.lang-choice').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            activeLang=btn.dataset.lang==='ru'?'ru':'en';
+            saveLang(activeLang);
+            applyLang(activeLang);
+        });
+    });
+
     /* MATRIX RAIN */
     (()=>{
         const cv=document.getElementById('mc'),cx=cv.getContext('2d');

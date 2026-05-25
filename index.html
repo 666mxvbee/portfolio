@@ -6,7 +6,7 @@
   <title>NEGANOV.SYS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
   <style>
       :root{
           --g:#00ff41;--g2:#00c832;--glow:rgba(0,255,65,.5);
@@ -17,7 +17,7 @@
       html,body{height:100%}
       body{
           background:var(--bg);
-          font-family:'Share Tech Mono',monospace;
+          font-family:'Share Tech Mono','JetBrains Mono',monospace;
           overflow:hidden;
       }
 
@@ -74,8 +74,51 @@
           z-index:3;
       }
       .topbar-l{font-size:.62rem;color:var(--dim);letter-spacing:.22em;}
+      .topbar-actions{display:flex;align-items:center;gap:14px;}
       .topbar-r{font-size:.62rem;color:var(--dim);letter-spacing:.15em;}
-      .topbar-r span{color:var(--g);}
+      .topbar-r .status-value{color:var(--g);}
+      .lang-switch{
+          position:relative;
+          border:1px solid rgba(0,255,65,.32);
+          border-radius:3px;
+          background:rgba(0,255,65,.045);
+          padding:2px;
+          display:flex;align-items:center;
+          gap:2px;
+          overflow:hidden;
+      }
+      .lang-choice{
+          position:relative;
+          min-width:48px;height:26px;
+          border:0;border-radius:2px;
+          background:transparent;
+          color:var(--dim);
+          font-family:'Share Tech Mono','JetBrains Mono',monospace;
+          font-size:.58rem;letter-spacing:.12em;
+          cursor:pointer;
+          display:flex;align-items:center;justify-content:center;
+          overflow:hidden;
+          transition:color .25s,background .25s,box-shadow .25s;
+          -webkit-tap-highlight-color:transparent;
+      }
+      .lang-choice::before{
+          content:'';position:absolute;top:0;left:-100%;
+          width:100%;height:100%;
+          background:linear-gradient(90deg,transparent,rgba(0,255,65,.12),transparent);
+          transition:left .35s;
+      }
+      .lang-choice:hover,
+      .lang-choice.active{
+          color:var(--g);
+          background:rgba(0,255,65,.08);
+          box-shadow:inset 0 0 14px rgba(0,255,65,.04);
+      }
+      .lang-choice:hover::before{left:100%;}
+      .lang-choice:focus{outline:none;}
+      .lang-choice:focus-visible{
+          outline:1px solid var(--g);
+          outline-offset:2px;
+      }
 
       /* HERO */
       .hero{text-align:center;margin-bottom:64px;}
@@ -137,7 +180,7 @@
           background:transparent;
           border:1px solid var(--brd);
           border-radius:3px;
-          font-family:'Share Tech Mono',monospace;
+          font-family:'Share Tech Mono','JetBrains Mono',monospace;
           font-size:.82rem;letter-spacing:.28em;color:#8ec9a0;
           text-transform:uppercase;
           cursor:pointer;
@@ -205,6 +248,20 @@
       ::-webkit-scrollbar{width:4px;}
       ::-webkit-scrollbar-track{background:var(--bg);}
       ::-webkit-scrollbar-thumb{background:var(--dim);}
+
+      @media (max-width:680px){
+          .topbar{padding:14px 16px;gap:12px;}
+          .topbar-l{font-size:.56rem;letter-spacing:.14em;}
+          .topbar-actions{gap:10px;}
+          .topbar-r{display:none;}
+          .lang-choice{min-width:44px;height:26px;font-size:.55rem;}
+          .hero{margin-bottom:46px;padding:0 18px;}
+          .name{font-size:clamp(2.35rem,14vw,4.2rem);}
+          .role{font-size:.72rem;line-height:1.65;letter-spacing:.11em;}
+          .divider{margin:32px auto;}
+          .btn{width:min(320px,calc(100vw - 40px));}
+          .foot{padding:14px 18px;gap:18px;flex-wrap:wrap;}
+      }
   </style>
 </head>
 <body>
@@ -225,13 +282,19 @@
 
   <div class="topbar">
     <span class="topbar-l">NEGANOV.SYS &nbsp;//&nbsp; v2.0</span>
-    <span class="topbar-r">STATUS &nbsp;<span>● ONLINE</span></span>
+    <div class="topbar-actions">
+      <span class="topbar-r"><span data-i18n="statusLabel">STATUS</span> &nbsp;<span class="status-value" data-i18n="statusValue">● ONLINE</span></span>
+      <div class="lang-switch" role="group" aria-label="Language selector">
+        <button class="lang-choice" type="button" data-lang="ru" aria-label="Русская версия">RU</button>
+        <button class="lang-choice" type="button" data-lang="en" aria-label="English version">ENG</button>
+      </div>
+    </div>
   </div>
 
   <div class="hero">
-    <p class="eyebrow">// INITIALIZING PORTFOLIO</p>
+    <p class="eyebrow" data-i18n="eyebrow">// INITIALIZING PORTFOLIO</p>
     <h1 class="name">MIKHAIL<br>NEGANOV</h1>
-    <p class="role">.NET DEVELOPER &nbsp;·&nbsp; ITMO UNIVERSITY &nbsp;·&nbsp; SPB</p>
+    <p class="role" data-i18n="role">.NET DEVELOPER &nbsp;·&nbsp; ITMO UNIVERSITY &nbsp;·&nbsp; SPB</p>
   </div>
 
   <div class="divider"></div>
@@ -239,23 +302,23 @@
   <nav class="btns">
     <a class="btn btn-primary" href="https://drive.google.com/uc?export=download&id=15X2nk0A-5k9maR4XEozy1N-Nb_CBJoem" target="_blank">
       <span class="btn-icon">↓</span>
-      RESUME.PDF
+      <span data-i18n="resume">RESUME.PDF</span>
       <span class="btn-num">01</span>
     </a>
     <a class="btn" href="about.html">
       <span class="btn-icon">›</span>
-      ABOUT_ME
+      <span data-i18n="about">ABOUT_ME</span>
       <span class="btn-num">02</span>
     </a>
     <a class="btn" href="portfolio.html">
       <span class="btn-icon">›</span>
-      PROJECTS
+      <span data-i18n="projects">PROJECTS</span>
       <span class="btn-num">03</span>
     </a>
   </nav>
 
   <footer class="foot">
-    <a href="mailto:mitrasher.negativ@gmail.com">MAIL</a>
+    <a href="mailto:mitrasher.negativ@gmail.com" data-i18n="mail">MAIL</a>
     <a href="https://github.com/666mxvbee" target="_blank" rel="noopener">GITHUB</a>
     <a href="https://t.me/maybe420" target="_blank" rel="noopener">TELEGRAM</a>
   </footer>
@@ -263,6 +326,77 @@
 </div>
 
 <script>
+    const I18N={
+        en:{
+            statusLabel:'STATUS',
+            statusValue:'● ONLINE',
+            eyebrow:'// INITIALIZING PORTFOLIO',
+            role:'.NET DEVELOPER  ·  ITMO UNIVERSITY  ·  SPB',
+            resume:'RESUME.PDF',
+            about:'ABOUT_ME',
+            projects:'PROJECTS',
+            mail:'MAIL',
+            bootLines:[
+                {s:'[  OK  ]',t:'Kernel loaded: NEGANOV.SYS 2.0',ok:'ok'},
+                {s:'[  OK  ]',t:'Mounting identity partition...',ok:'ok'},
+                {s:'[  OK  ]',t:'.NET runtime: linked',ok:'ok'},
+                {s:'[ WARN ]',t:'Social life module: not found',ok:'warn'},
+                {s:'[  OK  ]',t:'3 modules detected: RESUME / ABOUT / PROJECTS',ok:'ok'},
+                {s:'[  OK  ]',t:'Ready.',ok:'ok'},
+            ],
+        },
+        ru:{
+            statusLabel:'СТАТУС',
+            statusValue:'● ОНЛАЙН',
+            eyebrow:'// ЗАГРУЗКА ПОРТФОЛИО',
+            role:'.NET РАЗРАБОТЧИК  ·  УНИВЕРСИТЕТ ИТМО  ·  СПБ',
+            resume:'РЕЗЮМЕ.PDF',
+            about:'ОБО_МНЕ',
+            projects:'ПРОЕКТЫ',
+            mail:'ПОЧТА',
+            bootLines:[
+                {s:'[  OK  ]',t:'Ядро загружено: NEGANOV.SYS 2.0',ok:'ok'},
+                {s:'[  OK  ]',t:'Подключаю раздел личности...',ok:'ok'},
+                {s:'[  OK  ]',t:'.NET runtime: linked',ok:'ok'},
+                {s:'[ WARN ]',t:'Модуль social life: не найден',ok:'warn'},
+                {s:'[  OK  ]',t:'3 модуля: РЕЗЮМЕ / ОБО МНЕ / ПРОЕКТЫ',ok:'ok'},
+                {s:'[  OK  ]',t:'Готово.',ok:'ok'},
+            ],
+        },
+    };
+    const LANG_KEY='neganov.lang';
+    function getSavedLang(){
+        try{return localStorage.getItem(LANG_KEY)==='ru'?'ru':'en';}
+        catch{return 'en';}
+    }
+    function saveLang(lang){
+        try{localStorage.setItem(LANG_KEY,lang);}
+        catch{}
+    }
+    let activeLang=getSavedLang();
+    function applyLang(lang){
+        const pack=I18N[lang]||I18N.en;
+        document.documentElement.lang=lang;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{
+            const key=el.dataset.i18n;
+            if(pack[key])el.textContent=pack[key];
+        });
+        document.querySelectorAll('.lang-choice').forEach(btn=>{
+            const isActive=btn.dataset.lang===lang;
+            btn.classList.toggle('active',isActive);
+            btn.setAttribute('aria-pressed',String(isActive));
+        });
+    }
+    applyLang(activeLang);
+    document.querySelectorAll('.lang-choice').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            const nextLang=btn.dataset.lang==='ru'?'ru':'en';
+            activeLang=nextLang;
+            saveLang(activeLang);
+            applyLang(activeLang);
+        });
+    });
+
     /* MATRIX RAIN */
     (()=>{
         const cv=document.getElementById('mc'),cx=cv.getContext('2d');
@@ -294,14 +428,7 @@
 
     /* BOOT */
     (async()=>{
-        const lines=[
-            {s:'[  OK  ]',t:'Kernel loaded: NEGANOV.SYS 2.0',ok:'ok'},
-            {s:'[  OK  ]',t:'Mounting identity partition…',ok:'ok'},
-            {s:'[  OK  ]',t:'.NET runtime: linked',ok:'ok'},
-            {s:'[ WARN ]',t:'Social life module: not found',ok:'warn'},
-            {s:'[  OK  ]',t:'3 modules detected: RESUME / ABOUT / PROJECTS',ok:'ok'},
-            {s:'[  OK  ]',t:'Ready.',ok:'ok'},
-        ];
+        const lines=I18N[activeLang].bootLines;
         const wrap=document.getElementById('blines'),fill=document.getElementById('bbf');
         const delay=ms=>new Promise(r=>setTimeout(r,ms));
         for(let i=0;i<lines.length;i++){
