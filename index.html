@@ -37,6 +37,111 @@
       background:linear-gradient(to bottom, rgba(255,255,255,.04), rgba(0,0,0,.03));
     }
 
+    .boot-screen{
+      position:fixed;
+      inset:0;
+      z-index:5000;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:
+        linear-gradient(#083596 0 12.5%, transparent 12.5% 84%, #173198 84% 100%),
+        radial-gradient(circle at 10% 22%, rgba(255,255,255,.28), transparent 23%),
+        linear-gradient(90deg, #5e84df 0%, #5878d4 48%, #638ce6 100%);
+      transition:opacity 320ms ease, visibility 320ms ease;
+    }
+
+    .boot-screen::before,
+    .boot-screen::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:2px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.8), rgba(255,148,0,.8), transparent);
+    }
+
+    .boot-screen::before{top:12.5%}
+    .boot-screen::after{bottom:16%}
+
+    .boot-screen.hidden{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+    }
+
+    .boot-lockup{
+      position:relative;
+      left:11vw;
+      top:3vh;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      color:#fff;
+      filter:drop-shadow(2px 3px 2px rgba(0,0,0,.25));
+    }
+
+    .boot-logo.windows-logo{
+      width:72px;
+      height:52px;
+      gap:3px;
+      transform:skew(-12deg) rotate(-8deg);
+    }
+
+    .boot-text small{
+      display:block;
+      margin-bottom:-3px;
+      font-size:10px;
+      color:#e6ecff;
+    }
+
+    .boot-text strong{
+      display:block;
+      font:700 30px/1 Tahoma,Arial,sans-serif;
+      letter-spacing:-1px;
+      color:#fff;
+    }
+
+    .boot-text em{
+      font-style:normal;
+      margin-left:3px;
+      color:#ffb24a;
+      font-size:20px;
+      letter-spacing:0;
+    }
+
+    .boot-loader{
+      position:absolute;
+      left:50%;
+      bottom:24%;
+      width:104px;
+      height:10px;
+      padding:2px;
+      transform:translateX(-50%);
+      border:1px solid rgba(18,44,117,.55);
+      background:rgba(255,255,255,.12);
+      box-shadow:inset 1px 1px 1px rgba(255,255,255,.25), 1px 1px 2px rgba(0,0,0,.2);
+      display:flex;
+      gap:2px;
+    }
+
+    .boot-loader span{
+      width:18px;
+      height:100%;
+      background:linear-gradient(90deg,#c8e5ff,#fff,#8cc5ff);
+      animation:bootPulse 900ms infinite steps(1);
+      opacity:.28;
+    }
+
+    .boot-loader span:nth-child(2){animation-delay:150ms}
+    .boot-loader span:nth-child(3){animation-delay:300ms}
+    .boot-loader span:nth-child(4){animation-delay:450ms}
+
+    @keyframes bootPulse{
+      0%,100%{opacity:.28}
+      50%{opacity:1}
+    }
+
     .desktop{
       position:relative;
       width:100vw;
@@ -84,6 +189,7 @@
     .start-button:focus,
     .taskbar-button:focus,
     .start-menu-item:focus,
+    .context-menu button:focus,
     .xp-link-button:focus{
       outline:none;
     }
@@ -325,6 +431,59 @@
     a{color:#003399}
     a:hover{color:#cc0000}
 
+    #contactWindow{
+      width:520px;
+      height:360px;
+      min-width:340px;
+      min-height:260px;
+    }
+
+    .contact-doc{
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      background:var(--xp-beige);
+    }
+
+    .notepad-menu{
+      flex:0 0 auto;
+      padding:3px 8px 4px;
+      border-bottom:1px solid #aca899;
+      background:#f5f4eb;
+      color:#222;
+      font:11px var(--font);
+      word-spacing:12px;
+    }
+
+    .contact-paper{
+      flex:1 1 auto;
+      margin:8px;
+      padding:16px 18px;
+      overflow:auto;
+      background:#fff;
+      border:1px solid #808080;
+      box-shadow:inset 1px 1px 0 rgba(0,0,0,.12);
+      color:#111;
+      font:13px/1.5 var(--font);
+    }
+
+    .contact-paper h2{
+      margin:0 0 10px;
+      color:#003399;
+      font:bold 16px var(--font);
+    }
+
+    .contact-line{
+      display:grid;
+      grid-template-columns:86px 1fr;
+      gap:12px;
+      padding:7px 0;
+      border-bottom:1px solid #e7e7e7;
+    }
+
+    .contact-line:last-child{border-bottom:0}
+    .contact-label{color:#555}
+
     .explorer{
       height:100%;
       display:grid;
@@ -429,6 +588,20 @@
     .prop-head svg{width:44px;height:44px;flex:0 0 auto}
     .prop-name{font-weight:bold;font-size:14px}
     .prop-row{margin:8px 0}
+    .file-meta{
+      display:grid;
+      grid-template-columns:92px 1fr;
+      gap:5px 10px;
+      margin:10px 0;
+      padding:9px 0;
+      border-top:1px solid #e2e2e2;
+      border-bottom:1px solid #e2e2e2;
+    }
+    .file-meta dt{
+      margin:0;
+      color:#555;
+    }
+    .file-meta dd{margin:0}
     .prop-actions{
       margin-top:14px;
       text-align:right;
@@ -439,11 +612,13 @@
       padding:5px 12px;
       color:#000;
       text-decoration:none;
+      font:11px var(--font);
       border:1px solid #003c74;
       border-top-color:#fff;
       border-left-color:#fff;
       background:linear-gradient(#fff,#d7d3c3);
       box-shadow:1px 1px 0 #808080;
+      cursor:pointer;
     }
     .xp-link-button:active{box-shadow:inset 1px 1px 2px rgba(0,0,0,.35)}
 
@@ -499,6 +674,7 @@
     .start-button:focus-visible,
     .taskbar-button:focus-visible,
     .start-menu-item:focus-visible,
+    .context-menu button:focus-visible,
     .xp-link-button:focus-visible{
       outline:1px dotted #fff;
       outline-offset:-3px;
@@ -610,10 +786,48 @@
       color:#fff;
     }
 
+    .context-menu{
+      position:fixed;
+      z-index:3000;
+      min-width:164px;
+      padding:2px;
+      background:#fff;
+      border:1px solid #aca899;
+      box-shadow:2px 2px 6px rgba(0,0,0,.35);
+      font:11px var(--font);
+    }
+
+    .context-menu[hidden]{display:none}
+
+    .context-menu button{
+      width:100%;
+      min-height:22px;
+      padding:3px 24px 3px 24px;
+      border:0;
+      background:transparent;
+      color:#111;
+      font:11px var(--font);
+      text-align:left;
+      cursor:default;
+    }
+
+    .context-menu button:hover,
+    .context-menu button:focus-visible{
+      background:#316ac5;
+      color:#fff;
+    }
+
+    .context-separator{
+      height:1px;
+      margin:3px 2px;
+      background:#aca899;
+      border-bottom:1px solid #fff;
+    }
+
     @media (max-width:767px){
       body{overflow:hidden}
       .desktop{
-        padding:0;
+        padding:0 0 var(--taskbar-h);
         display:flex;
         align-items:center;
         justify-content:center;
@@ -623,30 +837,70 @@
         display:flex;
         flex-direction:column;
         align-items:center;
-        gap:24px;
+        gap:clamp(10px,2.4vh,18px);
       }
       .desktop-icon{
         position:static;
-        width:154px;
-        min-height:118px;
-        padding:14px 8px 10px;
-        font-size:13px;
+        width:146px;
+        min-height:106px;
+        padding:10px 8px 8px;
+        font-size:12px;
         background:rgba(49,106,197,.18);
       }
-      .desktop-icon svg{width:62px;height:62px}
+      .desktop-icon svg{width:54px;height:54px}
       .desktop-label{max-width:138px}
-      .taskbar,
-      .start-menu{display:none!important}
+      .taskbar{
+        height:var(--taskbar-h);
+        grid-template-columns:92px minmax(0,1fr) 76px;
+      }
+      .start-button{
+        height:34px;
+        min-width:88px;
+        margin-left:0;
+        border-radius:0 17px 17px 0;
+        font-size:13px;
+        gap:5px;
+      }
+      .start-button .windows-logo{
+        width:16px;
+        height:16px;
+      }
+      .taskbar-apps{
+        padding:3px 4px;
+        gap:3px;
+      }
+      .taskbar-button{
+        height:29px;
+        min-width:0;
+        max-width:112px;
+        padding:3px 6px;
+        font-size:10px;
+      }
+      .system-tray{
+        min-width:76px;
+        padding:2px 5px;
+      }
+      #clock{font-size:10px}
+      #date{font-size:8px}
+      .start-menu{
+        left:2px;
+        bottom:var(--taskbar-h);
+        width:min(270px,calc(100vw - 4px));
+      }
+      .start-menu.open{display:block!important}
       .xp-window{
         position:fixed!important;
         left:3vw!important;
         top:7vh!important;
         width:94vw!important;
-        height:84vh!important;
+        height:calc(93vh - var(--taskbar-h))!important;
         min-width:0;
         max-width:none;
       }
-      .xp-window.maximized{height:100vh!important;top:0!important}
+      .xp-window.maximized{
+        height:calc(100vh - var(--taskbar-h))!important;
+        top:0!important;
+      }
       .xp-dialog{
         left:5vw!important;
         top:12vh!important;
@@ -669,6 +923,17 @@
   </style>
 </head>
 <body>
+  <div class="boot-screen" id="bootScreen" aria-label="Windows XP loading screen">
+    <div class="boot-lockup">
+      <span class="windows-logo boot-logo" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span class="boot-text">
+        <small>Microsoft</small>
+        <strong>Windows<em>XP</em></strong>
+      </span>
+    </div>
+    <div class="boot-loader" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  </div>
+
   <main class="desktop" id="desktop" aria-label="Windows XP desktop portfolio">
     <div class="desktop-icons" id="desktopIcons">
       <button class="desktop-icon" type="button" data-action="resume" aria-label="Open resume">
@@ -717,6 +982,31 @@
           <rect x="22" y="41" width="18" height="3" fill="#fff"/>
         </svg>
         <span class="desktop-label">Projects.idea</span>
+      </button>
+
+      <button class="desktop-icon" type="button" data-action="contact" aria-label="Open Contact">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="contactPaper" x1="13" y1="7" x2="51" y2="58" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#ffffff"/>
+              <stop offset=".58" stop-color="#edf5ff"/>
+              <stop offset="1" stop-color="#c6d7ec"/>
+            </linearGradient>
+            <linearGradient id="contactEnvelope" x1="13" y1="26" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#fff7c8"/>
+              <stop offset=".55" stop-color="#efd071"/>
+              <stop offset="1" stop-color="#c2912e"/>
+            </linearGradient>
+          </defs>
+          <path d="M13 7h29l9 9v40H13z" fill="url(#contactPaper)" stroke="#6f86a7"/>
+          <path d="M42 7v10h9" fill="#d7e6f9" stroke="#6f86a7"/>
+          <path d="M18 20h19M18 26h23M18 32h15" stroke="#9fb1c6" stroke-width="2"/>
+          <rect x="12" y="30" width="40" height="24" rx="3" fill="url(#contactEnvelope)" stroke="#8f6820"/>
+          <path d="M13 32l19 13 19-13" fill="none" stroke="#fff3b3" stroke-width="2"/>
+          <path d="M13 53l15-13M51 53L36 40" fill="none" stroke="#9a6b1d" stroke-width="2"/>
+          <text x="32" y="48" text-anchor="middle" font-family="Tahoma, Arial" font-size="11" font-weight="bold" fill="#61410d">@</text>
+        </svg>
+        <span class="desktop-label">Contact.txt</span>
       </button>
     </div>
 
@@ -785,6 +1075,42 @@
       <div class="resize-handle" data-resize="se" aria-hidden="true"></div>
     </section>
 
+    <section class="xp-window" id="contactWindow" data-window-title="Contact.txt" aria-label="Contact window">
+      <div class="titlebar">
+        <div class="window-title">Contact.txt - Notepad</div>
+        <div class="window-controls">
+          <button class="win-btn min" type="button" data-control="minimize" aria-label="Minimize">-</button>
+          <button class="win-btn max" type="button" data-control="maximize" aria-label="Maximize">□</button>
+          <button class="win-btn close" type="button" data-control="close" aria-label="Close">×</button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="contact-doc">
+          <div class="notepad-menu">File Edit Format View Help</div>
+          <div class="contact-paper">
+            <h2>Contact.txt</h2>
+            <div class="contact-line">
+              <span class="contact-label">Name</span>
+              <span>Mikhail Neganov</span>
+            </div>
+            <div class="contact-line">
+              <span class="contact-label">Email</span>
+              <a href="mailto:mitrasher.negativ@gmail.com">mitrasher.negativ@gmail.com</a>
+            </div>
+            <div class="contact-line">
+              <span class="contact-label">GitHub</span>
+              <a href="https://github.com/666mxvbee" target="_blank" rel="noopener">github.com/666mxvbee</a>
+            </div>
+            <div class="contact-line">
+              <span class="contact-label">Telegram</span>
+              <a href="https://t.me/maybe420" target="_blank" rel="noopener">t.me/maybe420</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="resize-handle" data-resize="se" aria-hidden="true"></div>
+    </section>
+
     <section class="xp-window" id="projectsWindow" data-window-title="Projects" aria-label="Projects window">
       <div class="titlebar">
         <div class="window-title">Projects</div>
@@ -811,7 +1137,7 @@
       <div class="resize-handle" data-resize="se" aria-hidden="true"></div>
     </section>
 
-    <section class="xp-window xp-dialog" id="propertiesWindow" aria-label="Project properties dialog">
+    <section class="xp-window xp-dialog" id="propertiesWindow" aria-label="File properties dialog">
       <div class="titlebar">
         <div class="window-title" id="propertiesTitle">Properties</div>
         <div class="window-controls">
@@ -828,7 +1154,14 @@
       <button class="start-menu-item" type="button" data-action="resume">📄 Resume</button>
       <button class="start-menu-item" type="button" data-action="about">🖥️ About Mikhail</button>
       <button class="start-menu-item" type="button" data-action="projects">💡 Projects</button>
+      <button class="start-menu-item" type="button" data-action="contact">✉ Contact.txt</button>
     </div>
+  </div>
+
+  <div class="context-menu" id="contextMenu" role="menu" hidden>
+    <button type="button" role="menuitem" data-context-action="open">Open</button>
+    <div class="context-separator" aria-hidden="true"></div>
+    <button type="button" role="menuitem" data-context-action="properties">Properties</button>
   </div>
 
   <nav class="taskbar" aria-label="Windows XP taskbar">
@@ -849,6 +1182,37 @@
     const resumeUrl='https://drive.google.com/uc?export=download&id=15X2nk0A-5k9maR4XEozy1N-Nb_CBJoem';
     let zCounter=50;
     const mobileQuery=window.matchMedia('(max-width: 767px)');
+    const fileCreatedDate='01.01.1970';
+    const desktopFileMeta={
+      resume:{
+        name:'Neganov_CV.pdf',
+        type:'Adobe Acrobat Document',
+        location:'Desktop',
+        size:'Google Drive PDF download',
+        description:'Resume file with education, experience, stack, and contact details.'
+      },
+      about:{
+        name:'About Mikhail',
+        type:'System information shortcut',
+        location:'Desktop',
+        size:'1 KB',
+        description:'Profile summary, experience, education, stack, languages, and contacts.'
+      },
+      projects:{
+        name:'Projects.idea',
+        type:'JetBrains Rider project shortcut',
+        location:'Desktop',
+        size:'4 KB',
+        description:'Explorer window with selected GitHub projects and technical details.'
+      },
+      contact:{
+        name:'Contact.txt',
+        type:'Text Document',
+        location:'Desktop',
+        size:'1 KB',
+        description:'Quick contact file with email, GitHub, and Telegram links.'
+      }
+    };
 
     const projects=[
       {
@@ -1008,9 +1372,11 @@
 
     function runAction(action){
       closeStartMenu();
+      closeContextMenu();
       if(action==='resume') window.open(resumeUrl,'_blank','noopener');
       if(action==='about') openWindow('aboutWindow');
       if(action==='projects') openWindow('projectsWindow');
+      if(action==='contact') openWindow('contactWindow');
     }
 
     document.querySelectorAll('[data-action]').forEach(el=>{
@@ -1035,6 +1401,13 @@
           runAction(el.dataset.action);
         }
       });
+      el.addEventListener('contextmenu',event=>{
+        if(!el.classList.contains('desktop-icon')) return;
+        event.preventDefault();
+        event.stopPropagation();
+        selectDesktopIcon(el);
+        showContextMenu(event.clientX,event.clientY,{kind:'desktop',element:el,action:el.dataset.action});
+      });
     });
 
     function selectDesktopIcon(icon){
@@ -1043,7 +1416,6 @@
     }
 
     function taskbarHeight(){
-      if(mobileQuery.matches) return 0;
       return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--taskbar-h'),10) || 42;
     }
 
@@ -1135,10 +1507,67 @@
     document.addEventListener('pointerup',stopDesktopIconMove);
     document.addEventListener('pointercancel',stopDesktopIconMove);
 
+    const contextMenu=document.getElementById('contextMenu');
+    let contextTarget=null;
+
+    function showContextMenu(x,y,target){
+      closeStartMenu();
+      contextTarget=target;
+      const openButton=contextMenu.querySelector('[data-context-action="open"]');
+      openButton.textContent=target.kind==='project'?'Open on GitHub':'Open';
+      contextMenu.hidden=false;
+      contextMenu.style.left=x+'px';
+      contextMenu.style.top=y+'px';
+      requestAnimationFrame(()=>{
+        const rect=contextMenu.getBoundingClientRect();
+        const maxLeft=Math.max(4, window.innerWidth-rect.width-4);
+        const maxTop=Math.max(4, window.innerHeight-taskbarHeight()-rect.height-4);
+        contextMenu.style.left=Math.min(maxLeft, Math.max(4,x))+'px';
+        contextMenu.style.top=Math.min(maxTop, Math.max(4,y))+'px';
+      });
+    }
+
+    function closeContextMenu(){
+      if(!contextMenu) return;
+      contextMenu.hidden=true;
+      contextTarget=null;
+    }
+
+    function openProjectOnGitHub(projectId){
+      const project=projects.find(item=>item.id===projectId);
+      if(project) window.open(project.url,'_blank','noopener');
+    }
+
+    contextMenu.addEventListener('click',event=>{
+      const btn=event.target.closest('[data-context-action]');
+      if(!btn || !contextTarget) return;
+      event.stopPropagation();
+      const action=btn.dataset.contextAction;
+      const target=contextTarget;
+      closeContextMenu();
+      if(action==='open'){
+        if(target.kind==='desktop') runAction(target.action);
+        if(target.kind==='project') openProjectOnGitHub(target.projectId);
+      }
+      if(action==='properties'){
+        if(target.kind==='desktop') openDesktopProperties(target.element);
+        if(target.kind==='project') openProperties(target.projectId);
+      }
+    });
+
+    document.addEventListener('click',event=>{
+      if(!event.target.closest('.context-menu')) closeContextMenu();
+    });
+
+    document.addEventListener('contextmenu',event=>{
+      if(!event.target.closest('.desktop-icon,.project-file')) closeContextMenu();
+    });
+
     document.getElementById('desktop').addEventListener('click',event=>{
-      if(!event.target.closest('.desktop-icon,.xp-window,.taskbar,.start-menu')){
+      if(!event.target.closest('.desktop-icon,.xp-window,.taskbar,.start-menu,.context-menu')){
         document.querySelectorAll('.desktop-icon').forEach(item=>item.classList.remove('selected'));
         closeStartMenu();
+        closeContextMenu();
       }
     });
 
@@ -1342,6 +1771,13 @@
           file.classList.add('selected');
           if(mobileQuery.matches) openProperties(file.dataset.project);
         });
+        file.addEventListener('contextmenu',event=>{
+          event.preventDefault();
+          event.stopPropagation();
+          grid.querySelectorAll('.project-file').forEach(item=>item.classList.remove('selected'));
+          file.classList.add('selected');
+          showContextMenu(event.clientX,event.clientY,{kind:'project',projectId:file.dataset.project});
+        });
         file.addEventListener('dblclick',()=>openProperties(file.dataset.project));
         file.addEventListener('keydown',event=>{
           if(event.key==='Enter' || event.key===' '){
@@ -1350,6 +1786,54 @@
           }
         });
       });
+    }
+
+    function positionPropertiesWindow(win,anchor){
+      if(mobileQuery.matches || !anchor) return;
+      const rect=anchor.getBoundingClientRect();
+      const left=Math.min(window.innerWidth-win.offsetWidth-10, rect.right+14);
+      const top=Math.min(window.innerHeight-taskbarHeight()-win.offsetHeight-10, rect.top+8);
+      win.style.left=Math.max(10,left)+'px';
+      win.style.top=Math.max(10,top)+'px';
+      win.dataset.positioned='true';
+    }
+
+    function openDesktopProperties(icon){
+      const action=icon.dataset.action;
+      const meta=desktopFileMeta[action] || {
+        name:icon.querySelector('.desktop-label')?.textContent.trim() || 'Desktop file',
+        type:'Desktop file',
+        location:'Desktop',
+        size:'1 KB',
+        description:'Desktop item.'
+      };
+      const win=document.getElementById('propertiesWindow');
+      const iconMarkup=icon.querySelector('svg')?.outerHTML || '';
+      document.getElementById('propertiesTitle').textContent=meta.name+' Properties';
+      document.getElementById('propertiesBody').innerHTML=`
+        <div class="prop-panel">
+          <div class="prop-head">
+            ${iconMarkup}
+            <div>
+              <div class="prop-name">${meta.name}</div>
+              <div>${meta.type}</div>
+            </div>
+          </div>
+          <div class="prop-row"><strong>Description:</strong><br>${meta.description}</div>
+          <dl class="file-meta">
+            <dt>Type:</dt><dd>${meta.type}</dd>
+            <dt>Location:</dt><dd>${meta.location}</dd>
+            <dt>Size:</dt><dd>${meta.size}</dd>
+            <dt>Created:</dt><dd>${fileCreatedDate}</dd>
+          </dl>
+          <div class="prop-actions"><button class="xp-link-button" type="button" id="propertiesOpenButton">Open</button></div>
+        </div>
+      `;
+      document.getElementById('propertiesOpenButton').addEventListener('click',()=>runAction(action));
+      win.dataset.positioned='';
+      openWindow('propertiesWindow');
+      positionPropertiesWindow(win,icon);
+      bringToFront(win);
     }
 
     function openProperties(projectId){
@@ -1368,6 +1852,11 @@
           </div>
           <div class="prop-row"><strong>Description:</strong><br>${project.description}</div>
           <div class="prop-row"><strong>Language + tech:</strong><br><span class="badge">${project.tech}</span></div>
+          <dl class="file-meta">
+            <dt>Type:</dt><dd>${project.language} project file</dd>
+            <dt>Location:</dt><dd>My Projects</dd>
+            <dt>Created:</dt><dd>${fileCreatedDate}</dd>
+          </dl>
           <div class="prop-actions"><a class="xp-link-button" href="${project.url}" target="_blank" rel="noopener">Open on GitHub →</a></div>
         </div>
       `;
@@ -1386,6 +1875,7 @@
     const startMenu=document.getElementById('startMenu');
     startButton.addEventListener('click',event=>{
       event.stopPropagation();
+      closeContextMenu();
       startMenu.classList.toggle('open');
       startButton.classList.toggle('active',startMenu.classList.contains('open'));
     });
@@ -1396,6 +1886,7 @@
     document.addEventListener('keydown',event=>{
       if(event.key==='Escape'){
         closeStartMenu();
+        closeContextMenu();
         const prop=document.getElementById('propertiesWindow');
         if(prop.classList.contains('open')) closeWindow(prop);
       }
@@ -1407,11 +1898,23 @@
       document.getElementById('date').textContent=now.toLocaleDateString([], {month:'short', day:'2-digit'});
     }
 
+    function hideBootScreen(){
+      const boot=document.getElementById('bootScreen');
+      if(!boot) return;
+      const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const delay=reduced?300:1350;
+      window.setTimeout(()=>{
+        boot.classList.add('hidden');
+        boot.setAttribute('aria-hidden','true');
+      },delay);
+    }
+
     buildProjectGrid();
     positionDesktopIcons();
     window.addEventListener('resize',positionDesktopIcons);
     updateClock();
     setInterval(updateClock,1000);
+    hideBootScreen();
   </script>
 </body>
 </html>
